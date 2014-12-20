@@ -2,6 +2,12 @@
 {% block content %}
 <h2>Welcome to the Flask blog</h2>
 <p><a href="/logout">Logout</a></p>
+<h3>Add a new post</h3>
+<form action="{{ url_for('add') }}" method="POST" class="add">
+    <input name="title" type="text">
+    <textarea name="post" rows="5" cols="40"></textarea>
+    <input class="button" type="submit" value="Save">
+</form>
 <br>
 <br>
 <h3>Posts</h3>
