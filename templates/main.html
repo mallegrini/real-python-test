@@ -1,0 +1,13 @@
+{% extends 'template.html' %}
+{% block content %}
+<h2>Welcome to the Flask blog</h2>
+<p><a href="/logout">Logout</a></p>
+<br>
+<br>
+<h3>Posts</h3>
+{% for p in posts: %}
+Title: {{ p.title }}<br>
+Post: {{ p.post }}
+<br>
+{% endfor %}
+{% endblock %}
