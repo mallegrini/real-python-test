@@ -16,6 +16,7 @@ app = Flask(__name__)
 
 app.config.from_object(__name__)
 
+
 def login_required(test):
     @wraps(test)
     def wrap(*args,**kwargs):
@@ -28,6 +29,23 @@ def login_required(test):
 
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
+
+@app.route('/add', methods=['POST'])
+@login_required
+def add():
+    title = request.form['title']
+    post = request.form['post']
+    if not title or not post:
+        flash('All fields are required. Please try again')
+        return redirect(url_for('main'))
+    else:
+        g.db = connect_db()
+        g.db.execute('insert into posts (title,post) values (?,?)', [title,post])
+        g.db.commit()
+        g.db.close()
+        flash('New entry was successfully posted!')
+        return redirect(url_for('main'))
+
 
 @app.route('/logout')
 def logout():
